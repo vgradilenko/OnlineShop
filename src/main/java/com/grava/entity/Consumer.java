@@ -1,5 +1,6 @@
 package com.grava.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class Consumer implements Serializable{
 
     @Column
     private double money;
+
 
     @OneToMany(mappedBy = "consumer")
     private Set<Order> orders;

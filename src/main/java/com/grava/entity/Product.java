@@ -1,12 +1,11 @@
 package com.grava.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @Entity(name = "products")
@@ -23,9 +22,9 @@ public class Product implements Serializable {
     private double price;
 
     @Column(name = "product_date", nullable = false)
-    private Date date;
+    private LocalDate date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     private Order order;
 }
