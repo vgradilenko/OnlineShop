@@ -27,7 +27,7 @@ public class Consumer implements Serializable{
     @Column
     private double money;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "consumer")
     private Set<Order> orders;
 }
