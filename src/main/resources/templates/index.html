@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/script.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>mega shop</title>
+</head>
+<body>
+<h1>ROZETKA.UA, мы найдем не все </h1>
+
+<h2>Products</h2>
+<hr>
+<table id="products">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>PRICE</th>
+    </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+
+</table>
+<h2>add new product</h2>
+<table>
+    <input id="name" placeholder="name"></input>
+    <input id="price" placeholder="price"></input>
+    <input id="save_button" type="submit" value="add"></input>
+</table>
+
+<h2>Consumers</h2>
+<hr>
+<table id="consumers">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>FIRST_NAME</th>
+        <th>LAST_NAME</th>
+        <th>MONEY</th>
+        <th>TELEPHONE</th>
+    </tr>
+    </thead>
+    <tbody id="con_body"></tbody>
+</table>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        getAllproducts();
+        getAllConsumers();
+
+        $("#save_button").click(function () {
+            var name = $("#name").val();
+            var price = $("#price").val();
+            if (name.length >= 1) {
+                $("#name").val("");
+            }
+            if (price.length >= 1) {
+                $("#price").val("");
+            }
+            saveProd(name, price);
+        });
+    });
+</script>
+
+

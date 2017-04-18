@@ -1,0 +1,46 @@
+package com.grava.controller;
+
+import com.grava.entity.Product;
+import com.grava.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.Collection;
+
+@RestController
+@RequestMapping("/product/")
+public class ProductController {
+
+    private ProductRepository productRepository;
+
+    @Autowired
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    @GetMapping(value = "/{id}")
+    public Product getProductById(@PathVariable long id) {
+        return productRepository.findOne(id);
+    }
+
+    @GetMapping(value = "/all")
+    public Collection<Product> getAll() {
+        return productRepository.findAll();
+    }
+
+    @GetMapping(value = "/delete/{id}")
+    public void deleteProduct(@PathVariable long id) {
+        productRepository.delete(id);
+    }
+
+    @PostMapping(value = "/{name}/{price}")
+    public void saveProduct(@PathVariable String name, @PathVariable double price){
+        Product product = new Product();
+        product.setName(name);
+        product.setPrice(price);
+        product.setDate(LocalDate.now());
+        productRepository.saveAndFlush(product);
+    }
+}
