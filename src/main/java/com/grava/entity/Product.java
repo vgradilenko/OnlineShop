@@ -1,5 +1,6 @@
 package com.grava.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public class Product implements Serializable {
     @Column(name = "product_price", nullable = false)
     private double price;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Column(name = "product_date", nullable = false)
     private LocalDate date;
 

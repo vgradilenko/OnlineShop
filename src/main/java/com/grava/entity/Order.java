@@ -1,5 +1,6 @@
 package com.grava.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
@@ -22,6 +23,7 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Column(name = "order_date")
     private LocalDate date;
 
