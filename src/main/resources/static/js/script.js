@@ -7,9 +7,8 @@ function getAllproducts() {
                     "<td>" + product.id + "</td>"
                     + "<td>" + product.name + "</td>"
                     + "<td>" + product.price + "</td>"
-                    + "<td>" + product.date + "</td>"
                     + '<td><button onclick="deleteProd(' + product.id + ')">Delete</button></td>'
-                    + '<td><button id="buy" onclick="buyProduct(' + product.id + ')">ADD</button></td>'
+                    + '<td><button id="buy" onclick="addProduct(' + product.id + ')">ADD</button></td>'
                     + '<td><a id="count">0</a></td>>'
                 ).append('</tr>')
             )
@@ -43,13 +42,14 @@ function saveProd(name, price) {
     setTimeout(getAllproducts, 200);
 }
 
-function buyProduct(id) {
+function addProduct(id) {
     var count = 0;
-    $("#buy").onclick = function () {
+    $("#buy").click = function () {
         count++;
     };
-    var product = $.get("/product/" + id);
-    console.log(product + " " + count);
+     $.getJSON("/product/" + id);
+     var product = $.getJSON("/product/" + id);
+     console.log("tmp");
 }
 
 
