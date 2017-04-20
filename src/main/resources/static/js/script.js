@@ -8,8 +8,7 @@ function getAllproducts() {
                     + "<td>" + product.name + "</td>"
                     + "<td>" + product.price + "</td>"
                     + '<td><button onclick="deleteProd(' + product.id + ')">Delete</button></td>'
-                    + '<td><button id="buy" onclick="addProduct(' + product.id + ')">ADD</button></td>'
-                    + '<td><a id="count">0</a></td>>'
+                    + '<td><button id="addbtn" onclick="addProduct(' + product.id + ')">ADD</button></td>'
                 ).append('</tr>')
             )
         });
@@ -32,6 +31,20 @@ function getAllConsumers() {
     });
 }
 
+function getOrders() {
+    $.get("/order/all", function (orders) {
+        $.each(orders, function (i, order) {
+            $("#order_body").append(
+                $("<tr>").append(
+                    "<td>" + order.id + "</td>"
+                    + "<td>" + order.consumer.firstName + "</td>"
+                    + "<td>" + getProductFrom(order.products) + "</td>"
+                )
+            ).append("</tr>")
+        });
+    });
+}
+
 function deleteProd(prodId) {
     $.get("/product/delete/" + prodId);
     setTimeout(getAllproducts, 200);
@@ -42,14 +55,18 @@ function saveProd(name, price) {
     setTimeout(getAllproducts, 200);
 }
 
+var arr = [];
 function addProduct(id) {
-    var count = 0;
-    $("#buy").click = function () {
-        count++;
-    };
-     $.getJSON("/product/" + id);
-     var product = $.getJSON("/product/" + id);
-     console.log("tmp");
+    arr.push(id);
+    console.log(arr);
+}
+function getProductFrom(products) {
+    var result = "";
+    var fromJson = JSON.stringify(products);
+    $.each(fromJson, function (i, product) {
+        result = result + product.name + " ";
+    });
+    return result;
 }
 
 

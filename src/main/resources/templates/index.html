@@ -51,7 +51,7 @@
     <tr>
         <th>ID</th>
         <th>CONSUMER</th>
-
+        <th>PRODUCTS</th>
     </tr>
     </thead>
     <tbody id="order_body"></tbody>
@@ -64,7 +64,7 @@
     $(document).ready(function () {
         getAllproducts();
         getAllConsumers();
-
+        getOrders();
         $("#save_button").click(function () {
             var name = $("#name").val();
             var price = $("#price").val();

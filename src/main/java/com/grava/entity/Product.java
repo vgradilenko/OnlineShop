@@ -27,6 +27,6 @@ public class Product implements Serializable {
     private LocalDate date;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     private Order order;
 }

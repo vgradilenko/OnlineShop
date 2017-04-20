@@ -11,11 +11,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name = "orders")
-@DynamicUpdate(true)
-@DynamicInsert(true)
 @Data
 public class Order implements Serializable {
 
@@ -27,14 +26,13 @@ public class Order implements Serializable {
     @Column(name = "order_date")
     private LocalDate date;
 
-    @Column(name = "sum")
-    private double sum;
+    @OneToMany
+    @JoinTable(name="orders_products",
+            joinColumns = @JoinColumn(name="order_id", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name="product_id", referencedColumnName="id")
+    )
+    private List<Product> products;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    private Set<Product> products;
-
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "consumer_id", nullable = false)
     private Consumer consumer;
