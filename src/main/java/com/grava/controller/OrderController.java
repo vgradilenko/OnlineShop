@@ -1,17 +1,11 @@
 package com.grava.controller;
 
-import com.grava.entity.Consumer;
 import com.grava.entity.Order;
-import com.grava.entity.Product;
 import com.grava.repository.ConsumerRepository;
 import com.grava.repository.OrderRepository;
-import com.grava.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @RestController

@@ -3,7 +3,6 @@ package com.grava.controller;
 import com.grava.entity.Product;
 import com.grava.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -36,10 +35,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "/save")
-    public void saveProduct(@RequestBody Product product){
-//        Product product = new Product();
-//        product.setName(name);
-//        product.setPrice(price);
+    public void saveProduct(@RequestBody Product product) {
         product.setDate(LocalDate.now());
         productRepository.saveAndFlush(product);
     }
