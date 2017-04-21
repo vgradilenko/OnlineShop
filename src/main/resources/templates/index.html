@@ -44,8 +44,7 @@
     <tbody id="con_body"></tbody>
 </table>
 <hr>
-
-<h2>ORDER</h2>
+<h2>ORDERS</h2>
 <table id="orders">
     <thead>
     <tr>
@@ -56,12 +55,25 @@
     </thead>
     <tbody id="order_body"></tbody>
 </table>
+<hr>
+<h2>BUY PRODUCT</h2>
+    <select size='3' id="select">
+    </select>
+    <br>
+    <input id="order_products" disabled placeholder="products"></input>
+    <br>
+    <input id="order_sum" disabled placeholder="summa"></input>
+    <br>
+    <input id="buy_all" type="submit" value="BUY ALL"></input>
+    <input id="clean_all" type="submit" value="CLEAN"></input>
+</table>
 
 </body>
 </html>
 
 <script>
     $(document).ready(function () {
+        getConsumerInOrder()
         getAllproducts();
         getAllConsumers();
         getOrders();
@@ -75,6 +87,12 @@
                 $("#price").val("");
             }
             saveProd(name, price);
+        });
+        $("#buy_all").click(function () {
+            buyAll()
+        });
+        $("#clean_all").click(function () {
+            clean();
         });
     });
 </script>

@@ -22,7 +22,7 @@ public class Product implements Serializable {
     @Column(name = "product_price", nullable = false)
     private double price;
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonIgnore
     @Column(name = "product_date", nullable = false)
     private LocalDate date;
 

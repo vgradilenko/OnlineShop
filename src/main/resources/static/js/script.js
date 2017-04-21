@@ -45,6 +45,16 @@ function getOrders() {
     });
 }
 
+function getConsumerInOrder() {
+    $.get("/consumer/all", function (consumers) {
+        $.each(consumers, function (i, consumer) {
+            $("#select").append(
+                "<option value=" + consumer.id + " >" + consumer.firstName + " " + consumer.lastName + "</option>"
+            )
+        });
+    });
+}
+
 function deleteProd(prodId) {
     $.get("/product/delete/" + prodId);
     setTimeout(getAllproducts, 200);
@@ -55,18 +65,61 @@ function saveProd(name, price) {
     setTimeout(getAllproducts, 200);
 }
 
-var arr = [];
+var product = [];
+var sumProdInOrder = 0;
+var productsId = [];
 function addProduct(id) {
-    arr.push(id);
-    console.log(arr);
-}
-function getProductFrom(products) {
-    var result = "";
-    var fromJson = JSON.stringify(products);
-    $.each(fromJson, function (i, product) {
-        result = result + product.name + " ";
+    $.get("/product/" + id, function (data) {
+        var name = data.name;
+        var price = data.price;
+
+        product.push(name);
+        productsId.push(data);
+        sumProdInOrder = sumProdInOrder + price;
+
+        $("#order_products").val(product);
+        $("#order_sum").val(sumProdInOrder);
     });
-    return result;
 }
 
+function clean() {
+    product.length = 0;
+    sumProdInOrder = 0;
+    $("#order_products").val("");
+    $("#order_sum").val("");
+}
+
+function getProductFrom(arr) {
+    var list = "";
+    var summa = 0;
+    $.each(arr, function (i, product) {
+        list = list + product.name + ", ";
+        summa = summa + product.price;
+    });
+    if (summa === 0) {
+        return list;
+    } else {
+        return list + " Summa: " + summa;
+    }
+}
+
+function buyAll() {
+    var consumerId = document.getElementById("select").value;
+
+    var consumer = {
+        id: consumerId
+    };
+
+    var order = {
+        consumer: consumer,
+        products: productsId
+    };
+
+    $.ajax({
+        url: "/order/save",
+        type: "post",
+        contentType: "application/json",
+        data: JSON.stringify(order)
+    });
+}
 

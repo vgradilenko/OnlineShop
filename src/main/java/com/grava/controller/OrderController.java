@@ -3,11 +3,14 @@ package com.grava.controller;
 import com.grava.entity.Consumer;
 import com.grava.entity.Order;
 import com.grava.entity.Product;
+import com.grava.repository.ConsumerRepository;
 import com.grava.repository.OrderRepository;
+import com.grava.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,11 +19,16 @@ import java.util.List;
 public class OrderController {
 
     private OrderRepository orderRepository;
-//    private List<Product> products;
+    private ConsumerRepository consumerRepository;
+    private ProductRepository productRepository;
 
     @Autowired
-    public OrderController(OrderRepository orderRepository) {
+    public OrderController(OrderRepository orderRepository,
+                           ConsumerRepository consumerRepository,
+                           ProductRepository productRepository) {
         this.orderRepository = orderRepository;
+        this.consumerRepository = consumerRepository;
+        this.productRepository = productRepository;
     }
 
     @GetMapping(value = "/{id}")
@@ -29,19 +37,17 @@ public class OrderController {
     }
 
     @GetMapping(value = "/all")
-    public Collection<Order> getAll() {
+    public List<Order> getAll() {
         return orderRepository.findAll();
     }
 
-    @PostMapping(name = "/new")
-    public void createNewOrder(@PathVariable Consumer consumer,
-                               @PathVariable List<Product> products) {
-        Order order = new Order();
-        order.setConsumer(consumer);
+    // FIXME: 4/20/2017 It's shit
+    @PostMapping(value = "/save")
+    public void createNewOrder(@RequestBody Order order) {
+        System.out.println(order);
+        order.setConsumer(consumerRepository.findOne(order.getConsumer().getId()));
         order.setDate(LocalDate.now());
-        order.setProducts(products);
+        order.setProducts(order.getProducts());
         orderRepository.saveAndFlush(order);
     }
-
-
 }
