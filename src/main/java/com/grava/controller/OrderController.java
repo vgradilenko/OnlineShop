@@ -1,6 +1,7 @@
 package com.grava.controller;
 
 import com.grava.entity.Order;
+import com.grava.entity.Product;
 import com.grava.repository.ConsumerRepository;
 import com.grava.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +35,25 @@ public class OrderController {
 
     @PostMapping(value = "/save")
     public void createNewOrder(@RequestBody Order order) {
-        System.out.println(order.getProducts());
         order.setConsumer(consumerRepository.findOne(order.getConsumer().getId()));
+        if (!checkMoney(order)){
+            return;
+        }
         order.setDate(LocalDate.now());
         orderRepository.saveAndFlush(order);
+    }
+
+    // FIXME: 4/21/2017 fix this
+    private boolean checkMoney(Order order){
+        int summa = 0;
+        for (Product price: order.getProducts()) {
+            summa += price.getPrice();
+        }
+
+        if (order.getConsumer().getMoney() < summa) {
+            return false;
+        }
+        order.getConsumer().setMoney(order.getConsumer().getMoney() - summa);
+        return true;
     }
 }
