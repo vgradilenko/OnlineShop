@@ -35,11 +35,11 @@ public class ProductController {
         productRepository.delete(id);
     }
 
-    @PostMapping(value = "/{name}/{price}")
-    public void saveProduct(@PathVariable String name, @PathVariable double price){
-        Product product = new Product();
-        product.setName(name);
-        product.setPrice(price);
+    @PostMapping(value = "/save")
+    public void saveProduct(@RequestBody Product product){
+//        Product product = new Product();
+//        product.setName(name);
+//        product.setPrice(price);
         product.setDate(LocalDate.now());
         productRepository.saveAndFlush(product);
     }

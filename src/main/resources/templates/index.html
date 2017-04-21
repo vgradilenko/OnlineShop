@@ -78,18 +78,12 @@
         getAllConsumers();
         getOrders();
         $("#save_button").click(function () {
-            var name = $("#name").val();
-            var price = $("#price").val();
-            if (name.length >= 1) {
-                $("#name").val("");
-            }
-            if (price.length >= 1) {
-                $("#price").val("");
-            }
-            saveProd(name, price);
+            saveProd();
+            setTimeout(getAllproducts, 200);
         });
         $("#buy_all").click(function () {
-            buyAll()
+            buyAll();
+            setTimeout(getOrders, 200);
         });
         $("#clean_all").click(function () {
             clean();

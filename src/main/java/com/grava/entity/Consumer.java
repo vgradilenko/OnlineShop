@@ -12,7 +12,7 @@ import java.util.Set;
 public class Consumer implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(name = "first_name", length = 30)
@@ -28,6 +28,6 @@ public class Consumer implements Serializable {
     private double money;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "consumer")
+    @OneToMany(mappedBy = "consumer", fetch = FetchType.LAZY)
     private Set<Order> orders;
 }

@@ -33,6 +33,7 @@ function getAllConsumers() {
 
 function getOrders() {
     $.get("/order/all", function (orders) {
+        $("#order_body").empty();
         $.each(orders, function (i, order) {
             $("#order_body").append(
                 $("<tr>").append(
@@ -60,9 +61,29 @@ function deleteProd(prodId) {
     setTimeout(getAllproducts, 200);
 }
 
-function saveProd(name, price) {
-    $.post("/product/" + name + "/" + price);
-    setTimeout(getAllproducts, 200);
+function saveProd() {
+    var name = $("#name").val();
+    var price = $("#price").val();
+
+    var product = {
+        name: name,
+        price: price
+    };
+
+    if (name.length >= 1) {
+        $("#name").val("");
+    }
+
+    if (price.length >= 1) {
+        $("#price").val("");
+    }
+
+    $.ajax({
+        url: "/product/save",
+        type: "post",
+        contentType: "application/json",
+        data: JSON.stringify(product)
+    });
 }
 
 var product = [];

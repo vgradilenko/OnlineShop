@@ -20,18 +20,14 @@ import java.util.Set;
 public class Order implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @JsonFormat(pattern="yyyy-MM-dd")
     @Column(name = "order_date")
     private LocalDate date;
 
-    @OneToMany
-    @JoinTable(name="orders_products",
-            joinColumns = @JoinColumn(name="order_id", referencedColumnName="id"),
-            inverseJoinColumns = @JoinColumn(name="product_id", referencedColumnName="id")
-    )
+    @ManyToMany
     private List<Product> products;
 
     @ManyToOne

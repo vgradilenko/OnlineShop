@@ -20,15 +20,12 @@ public class OrderController {
 
     private OrderRepository orderRepository;
     private ConsumerRepository consumerRepository;
-    private ProductRepository productRepository;
 
     @Autowired
     public OrderController(OrderRepository orderRepository,
-                           ConsumerRepository consumerRepository,
-                           ProductRepository productRepository) {
+                           ConsumerRepository consumerRepository) {
         this.orderRepository = orderRepository;
         this.consumerRepository = consumerRepository;
-        this.productRepository = productRepository;
     }
 
     @GetMapping(value = "/{id}")
@@ -41,13 +38,11 @@ public class OrderController {
         return orderRepository.findAll();
     }
 
-    // FIXME: 4/20/2017 It's shit
     @PostMapping(value = "/save")
     public void createNewOrder(@RequestBody Order order) {
-        System.out.println(order);
+        System.out.println(order.getProducts());
         order.setConsumer(consumerRepository.findOne(order.getConsumer().getId()));
         order.setDate(LocalDate.now());
-        order.setProducts(order.getProducts());
         orderRepository.saveAndFlush(order);
     }
 }

@@ -7,13 +7,14 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
-@Entity(name = "products")
+@Entity
 public class Product implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(name = "product_name", nullable = false, length = 30)
@@ -27,6 +28,6 @@ public class Product implements Serializable {
     private LocalDate date;
 
     @JsonIgnore
-    @ManyToOne()
-    private Order order;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Order> order;
 }
