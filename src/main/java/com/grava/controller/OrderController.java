@@ -36,15 +36,14 @@ public class OrderController {
     @PostMapping(value = "/save")
     public void createNewOrder(@RequestBody Order order) {
         order.setConsumer(consumerRepository.findOne(order.getConsumer().getId()));
-        if (!checkMoney(order)){
+        if (!withdrawMoney(order)){
             return;
         }
         order.setDate(LocalDate.now());
         orderRepository.saveAndFlush(order);
     }
 
-    // FIXME: 4/21/2017 fix this
-    private boolean checkMoney(Order order){
+    private boolean withdrawMoney(Order order){
         int summa = 0;
         for (Product price: order.getProducts()) {
             summa += price.getPrice();
