@@ -1,12 +1,9 @@
 package com.grava.controller;
 
-import com.grava.entity.Consumer;
+import com.grava.model.Consumer;
 import com.grava.repository.ConsumerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -27,7 +24,12 @@ public class ConsumerController {
     }
 
     @GetMapping(value = "{id}")
-    public Consumer getConsumerById(@PathVariable long id) {
+    public Consumer getConsumerById(@PathVariable String id) {
         return consumerRepository.findOne(id);
+    }
+
+    @PostMapping(value = "/save")
+    public void save(@RequestBody Consumer consumer) {
+        consumerRepository.save(consumer);
     }
 }

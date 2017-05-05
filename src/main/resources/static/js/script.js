@@ -4,19 +4,20 @@ function getAllproducts() {
         $.each(products, function (i, product) {
             $("#tbody").append(
                 $('<tr>').append(
-                    "<td>" + product.id + "</td>"
+                    '<td>' + product.id + "</td>"
                     + "<td>" + product.name + "</td>"
                     + "<td>" + product.price + "</td>"
-                    + '<td><button onclick="deleteProd(' + product.id + ')">Delete</button></td>'
-                    + '<td><button id="addbtn" onclick="addProduct(' + product.id + ')">ADD</button></td>'
-                ).append('</tr>')
-            )
+                    + '<td><button onclick="deleteProd(\'' + product.id + '\')">Delete</button></td>'
+                    + '<td><button id="addbtn" onclick="addProduct(\'' + product.id + '\')">ADD</button></td>'
+                )
+            ).append('</tr>')
         });
     });
 }
 
 function getAllConsumers() {
     $.get("/consumer/all", function (consumers) {
+        $("#con_body").empty();
         $.each(consumers, function (i, consumer) {
             $("#con_body").append(
                 $("<tr>").append(
@@ -57,7 +58,11 @@ function getConsumerInOrder() {
 }
 
 function deleteProd(prodId) {
-    $.get("/product/delete/" + prodId);
+    $.ajax({
+        url: "/product/delete/" + prodId,
+        method: 'DELETE',
+        contentType: 'application/json'
+    });
     setTimeout(getAllproducts, 200);
 }
 
@@ -78,11 +83,50 @@ function saveProd() {
         $("#price").val("");
     }
 
+    console.log("saving " + JSON.stringify(product));
+
     $.ajax({
         url: "/product/save",
         type: "post",
         contentType: "application/json",
         data: JSON.stringify(product)
+    });
+}
+
+function saveConsum() {
+    var firstName = $("#firstName").val();
+    var lastName = $("#lastName").val();
+    var telephone = $("#telephone").val();
+    var money = $("#money").val();
+
+    var consumer = {
+        firstName: firstName,
+        lastName: lastName,
+        telephone: telephone,
+        money: money
+    };
+
+    if (firstName.length >= 1) {
+        $("#firstName").val("");
+    }
+
+    if (lastName.length >= 1) {
+        $("#lastName").val("");
+    }
+
+    if (telephone.length >= 1) {
+        $("#telephone").val("");
+    }
+
+    if (money.length >= 1) {
+        $("#money").val("");
+    }
+
+    $.ajax({
+        url: "/consumer/save",
+        type: "post",
+        contentType: "application/json",
+        data: JSON.stringify(consumer)
     });
 }
 

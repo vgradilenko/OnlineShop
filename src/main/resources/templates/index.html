@@ -9,6 +9,10 @@
 <body>
 <h1>ROZETKA.UA, мы найдем не все </h1>
 
+<script type="template">
+
+</script>
+
 <h2>Products</h2>
 <hr>
 <table id="products">
@@ -42,6 +46,14 @@
     </tr>
     </thead>
     <tbody id="con_body"></tbody>
+</table>
+<hr>
+<table>
+    <input id="firstName" placeholder="firstName"></input>
+    <input id="lastName" placeholder="lastName"></input>
+    <input id="telephone" placeholder="telephone"></input>
+    <input id="money" placeholder="money"></input>
+    <input id="save_consumer" type="submit" value="addConsum"></input>
 </table>
 <hr>
 <h2>ORDERS</h2>
@@ -80,6 +92,10 @@
         $("#save_button").click(function () {
             saveProd();
             setTimeout(getAllproducts, 200);
+        });
+        $("#save_consumer").click(function () {
+           saveConsum();
+            setTimeout(getAllConsumers, 200);
         });
         $("#buy_all").click(function () {
             buyAll();

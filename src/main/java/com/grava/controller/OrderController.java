@@ -1,7 +1,7 @@
 package com.grava.controller;
 
-import com.grava.entity.Order;
-import com.grava.entity.Product;
+import com.grava.model.Order;
+import com.grava.model.Product;
 import com.grava.repository.ConsumerRepository;
 import com.grava.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class OrderController {
     }
 
     @GetMapping(value = "/{id}")
-    public Order getInfoById(@PathVariable long id) {
+    public Order getInfoById(@PathVariable String id) {
         return orderRepository.findOne(id);
     }
 
@@ -40,7 +40,7 @@ public class OrderController {
             return;
         }
         order.setDate(LocalDate.now());
-        orderRepository.saveAndFlush(order);
+        orderRepository.insert(order);
     }
 
     private boolean withdrawMoney(Order order){
