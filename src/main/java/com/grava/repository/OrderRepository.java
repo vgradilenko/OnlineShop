@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface OrderRepository extends MongoRepository<Order, String> {
 
-    // FIXME: 05.05.17
-    //ddd
 }
